@@ -1,15 +1,15 @@
 {
-  "name": "flump",
-  "url": "https://github.com/CrazyFlasher/flump",
+  "name": "ta-gen",
+  "url": "https://github.com/CrazyFlasher/ta-gen",
   "license": "MIT",
   "tags": [
   ],
-  "description": "Flump",
-  "version": "1.0.0",
-  "releasenote": "Initial",
+  "description": "ta-gen",
+  "version": "1.8.0",
+  "releasenote": "Added JPEG format",
   "contributors": [
-    "CrazyFlasher", 
-    "tconkling"
+    "neolit123",
+    "CrazyFlasher"
   ],
   "classPath": "",
   "dependencies": {

@@ -1,3 +1,9 @@
+* v1.8 - 08.01.2020
+- added possibility to export atlas in jpg format by passing -jpg and -jpgQuality optional params
+
+* v1.7 - 28.02.2019
+- added possibility to specify scale (-scale)
+
 * v1.6 - 30.03.2015
 - added automatic splitting of output atlases (via -multipart)
 - bug fix resulting in a performance boost when packing images

@@ -1,5 +1,0 @@
-#!/bin/sh
-pushd `dirname $0` > /dev/null
-SCRIPTPATH=`pwd`
-popd > /dev/null
-"$AIR_SDK_BIN"adl $SCRIPTPATH/ta-gen.xml -- "$@"

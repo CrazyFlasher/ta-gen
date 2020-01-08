@@ -56,6 +56,8 @@ package
 	import neolit123.utils.BitmapDataQuantize;
 	import neolit123.utils.BitmapDataExtrude;
 
+	import mx.graphics.codec.JPEGEncoder;
+
 	[SWF(width='512', height='512', backgroundColor='#ffffff', frameRate='1000')]
 
 	public class Main extends Sprite
@@ -84,6 +86,8 @@ package
 		private var scale:Number = 1;
 		private var useSquare:Boolean = false;
 		private var useMultipart:Boolean = false;
+		private var useJpg:Boolean;
+		private var jpgQuality:int = 90;
 
 		// files and lists
 		private var currentDir:File = null;
@@ -193,6 +197,8 @@ argument list:
   -verbose: detailed output
   -scale <0-1> (def. 1): scale of atlas
   -help: this screen
+  -jpg: export atlas in JPEG format
+  -jpgQuality: quality for JPEG format atlas
 ]]>;*/
 
 		public function Main():void
@@ -272,6 +278,10 @@ argument list:
 						continue;
 					case "-multipart":
 						useMultipart = true;
+						logArgument(carg);
+						continue;
+					case "-jpg":
+						useJpg = true;
 						logArgument(carg);
 						continue;
 					}
@@ -383,6 +393,16 @@ argument list:
 								scale = 1;
 							}
 							logArgument(carg, scale);
+							i++;
+							break;
+
+						case "-jpgQuality":
+							jpgQuality = parseInt(narg);
+							if (jpgQuality < 0 || jpgQuality > 100) {
+								warning("jpgQuality should be 0-100");
+								jpgQuality = 90;
+							}
+							logArgument(carg, jpgQuality);
 							i++;
 							break;
 						}
@@ -873,7 +893,7 @@ argument list:
 			startTime = getTimer();
 
 			// encode PNG
-			const ba:ByteArray = encodePNG(bmd);
+			const ba:ByteArray = useJpg ? encodeJPG(bmd) : encodePNG(bmd);
 			bmd.dispose();
 
 			var pos:uint;
@@ -900,6 +920,11 @@ argument list:
 
 			log("* file saved (" + pos + " bytes): " + _outFile.nativePath);
 			log("* done saving in " + (getTimer() - startTime) + " ms");
+		}
+
+		private function encodeJPG(_bmd:BitmapData):ByteArray
+		{
+			return new JPEGEncoder(jpgQuality).encode(_bmd);
 		}
 
 		private function encodePNG(_bmd:BitmapData):ByteArray
